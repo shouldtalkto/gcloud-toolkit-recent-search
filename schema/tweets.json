@@ -67,23 +67,6 @@
 		]
 	},
 	{
-		"name": "referenced_tweets",
-		"type": "RECORD",
-		"mode": "REPEATED",
-		"fields": [
-			{
-				"name": "id",
-				"type": "STRING",
-				"mode": "NULLABLE"
-			},
-			{
-				"name": "type",
-				"type": "STRING",
-				"mode": "NULLABLE"
-			}
-		]
-	},
-	{
 		"name": "in_reply_to_user_id",
 		"type": "STRING",
 		"mode": "NULLABLE"
@@ -228,28 +211,6 @@
 				]
 			},
 			{
-				"name": "cashtags",
-				"type": "RECORD",
-				"mode": "REPEATED",
-				"fields": [
-					{
-						"name": "start",
-						"type": "INTEGER",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "end",
-						"type": "INTEGER",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "tag",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					}
-				]
-			},
-			{
 				"name": "hashtags",
 				"type": "RECORD",
 				"mode": "REPEATED",
@@ -298,85 +259,6 @@
 					},
 					{
 						"name": "username",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					}
-				]
-			},
-			{
-				"name": "urls",
-				"type": "RECORD",
-				"mode": "REPEATED",
-				"fields": [
-					{
-						"name": "start",
-						"type": "INTEGER",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "end",
-						"type": "INTEGER",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "url",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "expanded_url",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "media_key",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "images",
-						"type": "RECORD",
-						"mode": "REPEATED",
-						"fields": [
-							{
-								"name": "url",
-								"type": "STRING",
-								"mode": "NULLABLE"
-							},
-							{
-								"name": "width",
-								"type": "INTEGER",
-								"mode": "NULLABLE"
-							},
-							{
-								"name": "height",
-								"type": "STRING",
-								"mode": "NULLABLE"
-							}
-						]
-					},
-					{
-						"name": "display_url",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "status",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "title",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "description",
-						"type": "STRING",
-						"mode": "NULLABLE"
-					},
-					{
-						"name": "unwound_url",
 						"type": "STRING",
 						"mode": "NULLABLE"
 					}

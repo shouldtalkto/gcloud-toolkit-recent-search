@@ -1,24 +1,41 @@
-// stt db = data represented in stt data models
-// analytics = data recorded in bigQuery
+// stt * = data represented in stt data models
+// _fields = unused but returned in response
+// everything else: potentially useful data recorded for analytics purposes; not necessary to stt app funcionality
 
 const splitUrl = [
-	'https://api.twitter.com/2/tweets/search/recent?tweet.fields=id', // stt db
-	'text', // stt db
-	'author_id', // stt db
-	'context_annotations', // analytics
-	'conversation_id', // analytics
-	'created_at', // stt db
-	'entities', // object {}
-	'in_reply_to_user_id', // stt db: Referent of "You" in "You should talk to" reply-tweets
-	'lang', // stt db
-	'possibly_sensitive', // stt db
-	'public_metrics', // object { retweet_count, reply_count, like_count, quote_count }
-	'referenced_tweets',
+	// Fields | stt Tweet.id
+	'https://api.twitter.com/2/tweets/search/recent?tweet.fields=id',
+	// stt Tweet.text
+	'text',
+	// stt Tweet.authorId
+	'author_id',
+	// inferred context (domains and entities) based on semantic analysis
+	'context_annotations',
+	// id of the original Tweet of the conversation
+	'conversation_id',
+	// stt Tweet.twCreatedAt
+	'created_at',
+	// object: { annotations, _urls, _hashtags, _cashtags, mentions }; mentions for user ids (Tweet.aId, Tweet.bId), annotations for analytics
+	'entities',
+	// stt Tweet.aId or Tweet.bId; Referent of the word "You" in "You should talk to" reply-tweets
+	'in_reply_to_user_id',
+	// stt Tweet.lang
+	'lang',
+	// stt Tweet.possiblySensitive
+	'possibly_sensitive',
+	// object: { retweet_count, reply_count, like_count, quote_count }; stt retweetCount, stt likeCount; reply_count and quote_count for analytics
+	'public_metrics',
+	// ?
 	'reply_settings',
-	'source', // analytics
-	'withheld&expansions=author_id', // Expansions | author's user object
-	'referenced_tweets.id', // referenced tweet objects (including previous versions of edited tweet)
-	'in_reply_to_user_id', // user object of author of tweet being replied to
+	// analytics
+	'source',
+	// Expansions | author's user object
+	'withheld&expansions=author_id',
+	// referenced tweet objects (including previous versions of edited tweet)
+	'referenced_tweets.id',
+	// user object of author of tweet being replied to
+	'in_reply_to_user_id',
+	//
 	'attachments.poll_ids',
 	'entities.mentions.username&poll.fields=duration_minutes',
 	'end_datetime',
