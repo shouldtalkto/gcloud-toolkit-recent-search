@@ -72,55 +72,53 @@
 		"mode": "NULLABLE"
 	},
 	{
-		"name": "conversation_id",
-		"type": "STRING",
-		"mode": "NULLABLE"
-	},
-	{
-		"name": "withheld",
+		"name": "poll",
 		"type": "RECORD",
 		"mode": "NULLABLE",
 		"fields": [
 			{
-				"name": "copyright",
+				"name": "id",
 				"type": "STRING",
 				"mode": "NULLABLE"
 			},
 			{
-				"name": "country_codes",
-				"type": "STRING",
-				"mode": "REPEATED"
-			}
-		]
-	},
-	{
-		"name": "geo",
-		"type": "RECORD",
-		"fields": [
-			{
-				"name": "place_id",
-				"type": "STRING",
+				"name": "duration_minutes",
+				"type": "INTEGER",
 				"mode": "NULLABLE"
 			},
 			{
-				"name": "coordinates",
+				"name": "end_datetime",
+				"type": "DATETIME",
+				"mode": "NULLABLE"
+			},
+			{
+				"name": "voting_status",
+				"type": "BOOLEAN",
+				"mode": "NULLABLE"
+			},
+			{
+				"name": "options",
 				"type": "RECORD",
+				"mode": "REPEATED",
 				"fields": [
 					{
-						"name": "type",
+						"name": "position",
+						"type": "INTEGER",
+						"mode": "NULLABLE"
+					},
+					{
+						"name": "label",
 						"type": "STRING",
 						"mode": "NULLABLE"
 					},
 					{
-						"name": "coordinates",
-						"type": "FLOAT",
+						"name": "votes",
+						"type": "INTEGER",
 						"mode": "REPEATED"
 					}
-				],
-				"mode": "NULLABLE"
+				]
 			}
-		],
-		"mode": "NULLABLE"
+		]
 	},
 	{
 		"name": "context_annotations",

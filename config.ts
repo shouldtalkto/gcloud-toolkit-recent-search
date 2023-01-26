@@ -1,63 +1,67 @@
 // stt * = data represented in stt data models
 // _fields = unused but returned in response
 // everything else: potentially useful data recorded for analytics purposes; not necessary to stt app funcionality
+// todo: add edited to schema, check fields for tweet and user schemas
 
 const splitUrl = [
 	// Fields | stt Tweet.id
 	'https://api.twitter.com/2/tweets/search/recent?tweet.fields=id',
-	// stt Tweet.text
-	'text',
 	// stt Tweet.authorId
 	'author_id',
-	// inferred context (domains and entities) based on semantic analysis
-	'context_annotations',
-	// id of the original Tweet of the conversation
-	'conversation_id',
-	// stt Tweet.twCreatedAt
-	'created_at',
-	// object: { annotations, _urls, _hashtags, _cashtags, mentions }; mentions for user ids (Tweet.aId, Tweet.bId), annotations for analytics
-	'entities',
-	// stt Tweet.aId or Tweet.bId; Referent of the word "You" in "You should talk to" reply-tweets
-	'in_reply_to_user_id',
+	// stt Tweet.text
+	'text',
 	// stt Tweet.lang
 	'lang',
 	// stt Tweet.possiblySensitive
 	'possibly_sensitive',
-	// object: { retweet_count, reply_count, like_count, quote_count }; stt retweetCount, stt likeCount; reply_count and quote_count for analytics
-	'public_metrics',
-	// ?
-	'reply_settings',
-	// analytics
-	'source',
-	// Expansions | author's user object
-	'withheld&expansions=author_id',
-	// referenced tweet objects (including previous versions of edited tweet)
-	'referenced_tweets.id',
-	// user object of author of tweet being replied to
+	// stt Tweet.aId or Tweet.bId; referent of the word "You" in "You should talk to" type reply-tweet
 	'in_reply_to_user_id',
-	//
-	'attachments.poll_ids',
-	'entities.mentions.username&poll.fields=duration_minutes',
-	'end_datetime',
-	'id',
-	'options',
-	'voting_status&user.fields=created_at',
-	'description',
-	'entities',
-	'id',
-	'location',
-	'name',
-	'pinned_tweet_id',
-	'profile_image_url',
-	'protected',
+	// stt Tweet.twCreatedAt
+	'created_at',
+	// array of ids indicating all versions of a tweet; stt Tweet.edited
+	'edit_history_tweet_ids',
+	// object: { retweet_count, reply_count, like_count, quote_count }; stt Tweet.retweetCount & Tweet.likeCount; reply_count & quote_count for analytics
 	'public_metrics',
-	'url',
+	// object: { annotations, _urls, hashtags, _cashtags, mentions }; mentions for user ids (stt Tweet.aId & Tweet.bId); annotations and hashtags for analytics
+	'entities',
+	// inferred context (domains and entities) based on semantic analysis
+	'context_annotations',
+	// name of app tweeted from, for analytics | Expansions | author's user object
+	'source&expansions=author_id',
+	// user object of author of tweet being replied to (for user referenced in reply-tweet)
+	'in_reply_to_user_id',
+	// poll object; poll data to be modeled and parsed when poll detection is implemented
+	'attachments.poll_ids',
+	// mentioned user objects | Poll Fields | poll data/
+	'entities.mentions.username&poll.fields=id',
+	'end_datetime',
+	'duration_minutes',
+	'options',
+	// /poll data | User Fields | stt User.id
+	'voting_status&user.fields=id',
+	// stt User.username
 	'username',
+	// stt User.name
+	'name',
+	// stt User.profileImageUrl
+	'profile_image_url',
+	// stt User.description
+	'description',
+	// stt User.location
+	'location',
+	// stt User.url
+	'url',
+	// stt User.verified
 	'verified',
-	'withheld',
+	// stt User.verifiedType
+	'verified_type',
+	// stt User.protected
+	'protected',
+	// object: { followers_count, following_count, tweet_count, _listed_count }; stt User.followersCount, User.followingCount, User.tweetCount
+	'public_metrics',
+	// stt User.twCreatedAt
+	'created_at',
 ]
-
-// todo: Add edited
 
 const config = {
 	twitter_bearer_token: 'Bearer <<INSERT YOUR BEARER TOKEN>>',
