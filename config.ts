@@ -1,11 +1,11 @@
 // stt * = data represented in stt data models
 // _fields = unused but returned in response
 // everything else: potentially useful data recorded for analytics purposes; not necessary to stt app funcionality
-// todo: add edited to schema, check fields for tweet and user schemas
+// todo: add edited to schema, check schema fields for tweet and user
 
-const splitUrl = [
-	// Fields | stt Tweet.id
-	'https://api.twitter.com/2/tweets/search/recent?tweet.fields=id',
+const tweetFields = [
+	// stt Tweet.id
+	'id',
 	// stt Tweet.authorId
 	'author_id',
 	// stt Tweet.text
@@ -26,19 +26,12 @@ const splitUrl = [
 	'entities',
 	// inferred context (domains and entities) based on semantic analysis
 	'context_annotations',
-	// name of app tweeted from, for analytics | Expansions | author's user object
-	'source&expansions=author_id',
-	// user object of author of tweet being replied to (for user referenced in reply-tweet)
-	'in_reply_to_user_id',
-	// poll object; poll data to be modeled and parsed when poll detection is implemented
-	'attachments.poll_ids',
-	// mentioned user objects | Poll Fields | poll data/
-	'entities.mentions.username&poll.fields=id',
-	'end_datetime',
-	'duration_minutes',
-	'options',
-	// /poll data | User Fields | stt User.id
-	'voting_status&user.fields=id',
+	// name of app tweeted from; for analytics
+	'source',
+]
+const userFields = [
+	// stt User.id
+	'id',
 	// stt User.username
 	'username',
 	// stt User.name
@@ -63,16 +56,48 @@ const splitUrl = [
 	'created_at',
 ]
 
+const expansions = [
+	// user object of author of tweet
+	'author_id',
+	// user object of author of tweet being replied to (for "You should talk to" type reply-tweets)
+	'in_reply_to_user_id',
+	// user objects of mentioned users ("user1 should talk to user2")
+	'entities.mentions.username',
+	// poll object (currently recorded but unused)
+	'attachments.poll_ids',
+]
+
+// todo: parse poll data and incorporate into campaign scores
+const pollFields = [
+	'id',
+	'end_datetime',
+	'duration_minutes',
+	// { position, label, votes }[]
+	'options',
+	'voting_status',
+]
+
+const assembledUrl = [
+	'https://api.twitter.com/2/tweets/search/recent',
+	'?tweet.fields=',
+	tweetFields.join(''),
+	'&user.fields=',
+	userFields.join(''),
+	'&poll.fields=',
+	pollFields.join(''),
+	'&expansions=',
+	expansions.join(''),
+].join('')
+
 const config = {
 	twitter_bearer_token: 'Bearer <<INSERT YOUR BEARER TOKEN>>',
 	gcp_projectId: '<<GCP PROJECT ID>>',
 	PORT: 4050,
-	recent_search_url: splitUrl.join(','),
+	recent_search_url: assembledUrl,
 	bq: {
 		table: {
 			tweets: 'tweets',
 			users: 'users',
-			media: 'media',
 		},
 	},
 }
